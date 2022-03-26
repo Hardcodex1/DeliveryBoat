@@ -1,8 +1,22 @@
 {
+  "name": "deliverboat",
+  "version": "1.0.0",
+  "description": "The Offical DeliveryBoat",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hardcodex1/DeliveryBoat.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Hardcodex1/DeliveryBoat/issues"
+  },
+  "homepage": "https://github.com/Hardcodex1/DeliveryBoat#readme",
   "dependencies": {
     "@discordjs/builders": "^0.12.0",
     "@discordjs/rest": "^0.3.0",
