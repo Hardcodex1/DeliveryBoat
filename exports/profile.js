@@ -11,19 +11,19 @@ async function slash(client, interaction, emojiData) {
     if (!profile[0]) {
         if (await interaction.options?.get("user")?.value)
             return await interaction.reply({
-                content: `<a:cross:${emojiData.cross}> The User Entered Does Not Have A Profile!`,
+                content: `The User Entered Does Not Have A Profile!`,
                 ephemeral: true,
             });
         else
             return await interaction.reply({
-                content: `<a:cross:${emojiData.cross}> You don't have a profile yet! Start Deliveing/Ordeing Stuff To Create One!`,
+                content: `You don't have a profile yet! Start Deliveing/Ordeing Stuff To Create One!`,
                 ephemeral: true,
             });
     }
     const member = interaction.guild.members.cache.get(userID);
     const embed = new discord_js_1.MessageEmbed()
-        .setTitle(`<a:tick:${emojiData.tick}> ${member.user.username}'s Profile`)
-        .setDescription(`<:age:${emojiData.age}> Name: \`${member.user.username}\` \n<a:upvote:${emojiData.upvote}> Points: \`${profile[0]?.points ? profile[0].points : 0}\` \n<:deliver:${emojiData.deliver}>Deliveries: \`${profile[0]?.total ? profile[0].total : 0}\` \n<:order:${emojiData.order}> Orders: \`${profile[0]?.orders ? profile[0]?.orders : 0}\``)
+        .setTitle(`${member.user.username}'s Profile`)
+        .setDescription(`Name: \`${member.user.username}\` \nPoints: \`${profile[0]?.points ? profile[0].points : 0}\` \nDeliveries: \`${profile[0]?.total ? profile[0].total : 0}\` \nOrders: \`${profile[0]?.orders ? profile[0]?.orders : 0}\``)
         .setThumbnail(member.user.displayAvatarURL())
         .setColor("#00ff00");
     await interaction.reply({ embeds: [embed] });

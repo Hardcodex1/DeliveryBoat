@@ -21,15 +21,15 @@ const view = async (name, interaction, emojiData) => {
     }
     if (!shopData[0]) {
         let errorEmbed = new discord_js_1.MessageEmbed()
-            .setTitle(`<a:cross:${emojiData.cross}> Shop Not Found!`)
+            .setTitle(`Shop Not Found!`)
             .setDescription(`The shop you are looking for does not exist or you don't have a shop`);
         return errorEmbed;
     }
     let embed = new discord_js_1.MessageEmbed()
-        .setTitle(`<a:shop:${emojiData.tick}> Shop Of ${interaction.guild.name}`)
-        .setDescription(`<a:shop:${emojiData.shop}> Name: \`${shopData[0].name}\` \n<:cart:${emojiData.cart}> Description: \`${shopData[0].description
+        .setTitle(`Shop Of ${interaction.guild.name}`)
+        .setDescription(`Name: \`${shopData[0].name}\` \nDescription: \`${shopData[0].description
         ? shopData[0].description
-        : "Welcome To Our Shop. Please Order"}\` \n<a:upvote:${emojiData.upvote}> Points: \`${shopData[0].points ? shopData[0].points : 0}\``)
+        : "Welcome To Our Shop. Please Order"}\` \nPoints: \`${shopData[0].points ? shopData[0].points : 0}\``)
         .setThumbnail(shopData[0].image)
         .setColor("#00000");
     return embed;
@@ -47,8 +47,8 @@ const create = async (name, channel, interaction, emojiData) => {
             : "Welcome To My Shop. Please Order",
     }, { upsert: true, new: true });
     let embed = new discord_js_1.MessageEmbed()
-        .setTitle(`<a:shop:${emojiData.shop}> Shop Created/Updated!`)
-        .setDescription(`<a:shop:${emojiData.shop}> Name: \`${name}\` \n<:cart:${emojiData.cart}> Description: \`${data[0]?.description
+        .setTitle(`Shop Created/Updated!`)
+        .setDescription(`Name: \`${name}\` \nDescription: \`${data[0]?.description
         ? data[0]?.description
         : "Welcome To My Shop. Please Order"}\``)
         .setColor("#0099ff")
@@ -59,17 +59,17 @@ const image = async (URL, interaction, emojiData) => {
     const shopSchema = require("../schemas/shopSchema");
     const data = await shopSchema.find({ guildID: interaction.guild.id });
     if (!data[0])
-        return await embedSender(`<a:cross:${emojiData.cross}> Shop Not Found!`, "This Server Does Not Have An Active Shop. \nUse `/shop create` to make one", "ffcccb", interaction.guild.iconURL());
+        return await embedSender(`Shop Not Found!`, "This Server Does Not Have An Active Shop. \nUse `/shop create` to make one", "ffcccb", interaction.guild.iconURL());
     await shopSchema.findOneAndUpdate({ guildID: interaction.guild.id }, { image: URL });
-    return await embedSender(`<a:tick:${emojiData.tick}> Shop Image Updated!`, "Your Server Shop Image Has Been Updated", "39FF14", URL);
+    return await embedSender(`Shop Image Updated!`, "Your Server Shop Image Has Been Updated", "39FF14", URL);
 };
 const description = async (descriptionString, interaction, emojiData) => {
     const shopSchema = require("../schemas/shopSchema");
     const data = await shopSchema.find({ guildID: interaction.guild.id });
     if (!data[0])
-        return await embedSender(`<a:cross:${emojiData.cross}> Shop Not Found!`, "This Server Does Not Have An Active Shop. \nUse `/shop create` to make one", "ffcccb", interaction.guild.iconURL() ? interaction.guild.iconURL() : "");
+        return await embedSender(`Shop Not Found!`, "This Server Does Not Have An Active Shop. \nUse `/shop create` to make one", "ffcccb", interaction.guild.iconURL() ? interaction.guild.iconURL() : "");
     await shopSchema.findOneAndUpdate({ guildID: interaction.guild.id }, { description: descriptionString });
-    return await embedSender(`<a:tick:${emojiData.tick}>Shop Description Updated!`, `Your Server Shop Description Has Been Updated To \`${descriptionString}\``, "39FF14", data[0]?.image
+    return await embedSender(`Shop Description Updated!`, `Your Server Shop Description Has Been Updated To \`${descriptionString}\``, "39FF14", data[0]?.image
         ? data[0]?.image
         : interaction.guild.iconURL()
             ? interaction.guild.iconURL()
@@ -111,7 +111,7 @@ async function slash(client, interaction, emojiData) {
         if (check == false)
             return await interaction.reply({
                 embeds: [
-                    embedSender(`<a:cross:${emojiData.cross}> Invalid URL Provided`, `Please Provide A Valid URL`, "ffcccb", ""),
+                    embedSender(`Invalid URL Provided`, `Please Provide A Valid URL`, "ffcccb", ""),
                 ],
             });
         let embed = await image(URL, interaction, emojiData);

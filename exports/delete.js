@@ -8,7 +8,7 @@ async function slash(client, interaction, emojiData) {
         const profileSchema = require("../schemas/profileSchema");
         await profileSchema.deleteOne({ userID: interaction.user.id });
         const embed = new discord_js_1.MessageEmbed()
-            .setTitle(`<a:tick:${emojiData.tick}> Profile Deleted!`)
+            .setTitle(`Profile Deleted!`)
             .setDescription(`Your Profile And All Your Data Has Been Erased From Our Database`)
             .setColor("#00ff00")
             .setThumbnail("https://cdn.discordapp.com/attachments/882894520126152735/957212043134533662/wastebasket_1f5d1-fe0f.png");
@@ -24,7 +24,7 @@ async function slash(client, interaction, emojiData) {
         const shopSchema = require("../schemas/shopSchema");
         await shopSchema.deleteOne({ guildID: interaction.guild.id });
         const embed = new discord_js_1.MessageEmbed()
-            .setTitle(`<a:tick:${emojiData.tick}> Shop Deleted!`)
+            .setTitle(`Shop Deleted!`)
             .setDescription(`All Shop Data From This Server Has Been Deleted!`)
             .setColor("#00ff00")
             .setThumbnail("https://cdn.discordapp.com/attachments/882894520126152735/957212043134533662/wastebasket_1f5d1-fe0f.png");

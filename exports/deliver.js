@@ -14,19 +14,19 @@ const embedSender = (title, description, color, thumbnail, footer) => {
 async function manual(client, interaction, orderID, emojiData) {
     const order = await require("../schemas/orderSchema").find({ orderID });
     if (!order[0]) {
-        return await embedSender(`<a:cross:${emojiData.cross}> Order With This ID Not Found`, "Error 404: `The Entered Order ID Does Not Match Any Order In Our Records`", "ffcccb", "", "fail");
+        return await embedSender(`Order With This ID Not Found`, "Error 404: `The Entered Order ID Does Not Match Any Order In Our Records`", "ffcccb", "", "fail");
     }
     if (order[0].guildID == interaction.guild.id)
-        return await embedSender(`<a:cross:${emojiData.cross}> You Cannot Deliver Your Own Order`, "Error 404: `The Entered Order ID Is From Your Server And Cannot Be Delivered`", "ffcccb", "", "fail");
+        return await embedSender(`You Cannot Deliver Your Own Order`, "Error 404: `The Entered Order ID Is From Your Server And Cannot Be Delivered`", "ffcccb", "", "fail");
     if (order[0].shopID != interaction.guild.id)
-        return await embedSender(`<a:cross:${emojiData.cross}> You Cannot Deliver This Order`, "Error 404: `The Entered Order ID Is Not Meant For This Shop/Server`", "ffcccb", "", "fail");
+        return await embedSender(`You Cannot Deliver This Order`, "Error 404: `The Entered Order ID Is Not Meant For This Shop/Server`", "ffcccb", "", "fail");
     let guild = client.guilds.cache.get(order[0].guildID);
     if (!guild) {
-        return await embedSender(`<a:cross:${emojiData.cross}> Order Delivery Location Not Found`, "Error: 404 `This Order Cannot Be Delivered`", "ffcccb", "", "fail");
+        return await embedSender(`Order Delivery Location Not Found`, "Error: 404 `This Order Cannot Be Delivered`", "ffcccb", "", "fail");
     }
     let channel = await guild.channels.cache.get(order[0].channelID);
     if (!channel)
-        return await embedSender(`<a:cross:${emojiData.cross}> Order Deliver Channel Not Found`, "This Order Cannot Be Delivered Since The Delivery Channel Is Not Found", "ffcccb", "", "fail");
+        return await embedSender(`Order Deliver Channel Not Found`, "This Order Cannot Be Delivered Since The Delivery Channel Is Not Found", "ffcccb", "", "fail");
     let invite = await channel.createInvite({
         maxUses: 1,
         maxAge: 60 * 60 * 12,
@@ -55,11 +55,9 @@ const automatic = async (client, interaction, orderID, embed, emojiData) => {
     const row = new discord_js_1.MessageActionRow().addComponents(new discord_js_1.MessageButton()
         .setCustomId("deliver_like")
         .setLabel("Like")
-        .setEmoji(emojiData.hearts)
         .setStyle("PRIMARY"), new discord_js_1.MessageButton()
         .setCustomId("deliver_report")
         .setLabel("Report")
-        .setEmoji(emojiData.report)
         .setStyle("DANGER"));
     await channel.send({
         content: `Here Is Your Order <@!${order[0].target}>`,
@@ -73,17 +71,17 @@ const automatic = async (client, interaction, orderID, embed, emojiData) => {
 const check = async (client, orderID, description, url, interaction, emojiData) => {
     const order = await require("../schemas/orderSchema").find({ orderID });
     if (!order[0])
-        return await embedSender(`<a:cross:${emojiData.cross}> Order With This ID Not Found`, "Error 404: `The Entered Order ID Does Not Match Any Order In Our Records`", "ffcccb", "", "fail");
+        return await embedSender(`Order With This ID Not Found`, "Error 404: `The Entered Order ID Does Not Match Any Order In Our Records`", "ffcccb", "", "fail");
     if (order[0].guildID == interaction.guild.id)
-        return await embedSender(`<a:cross:${emojiData.cross}> You Cannot Deliver Your Own Order`, "Error 404: `The Entered Order ID Is From Your Server And Cannot Be Delivered`", "ffcccb", "", "fail");
+        return await embedSender(`You Cannot Deliver Your Own Order`, "Error 404: `The Entered Order ID Is From Your Server And Cannot Be Delivered`", "ffcccb", "", "fail");
     if (order[0].shopID != interaction.guild.id)
-        return await embedSender(`<a:cross:${emojiData.cross}> You Cannot Deliver This Order`, "Error 404: `The Entered Order ID Is Not Meant For This Shop/Server`", "ffcccb", "", "fail");
+        return await embedSender(`You Cannot Deliver This Order`, "Error 404: `The Entered Order ID Is Not Meant For This Shop/Server`", "ffcccb", "", "fail");
     let guild = client.guilds.cache.get(order[0].guildID);
     if (!guild)
-        return await embedSender(`<a:cross:${emojiData.cross}> Order Delivery Location Not Found`, "Error: 404 `This Order Cannot Be Delivered`", "ffcccb", "", "fail");
+        return await embedSender(`Order Delivery Location Not Found`, "Error: 404 `This Order Cannot Be Delivered`", "ffcccb", "", "fail");
     let channel = await guild.channels.cache.get(order[0].channelID);
     if (!channel)
-        return await embedSender(`<a:cross:${emojiData.cross}> Order Deliver Channel Not Found`, "This Order Cannot Be Delivered Since The Delivery Channel Is Not Found", "ffcccb", "", "fail");
+        return await embedSender(`Order Deliver Channel Not Found`, "This Order Cannot Be Delivered Since The Delivery Channel Is Not Found", "ffcccb", "", "fail");
     let user = client.users.cache.get(order[0].target);
     let avatar;
     if (user)
@@ -91,8 +89,8 @@ const check = async (client, orderID, description, url, interaction, emojiData) 
     else
         avatar = interaction.user.displayAvatarURL();
     let embed = new discord_js_1.MessageEmbed()
-        .setTitle(`<a:tick:${emojiData.tick}> Your Order Is Here!!`)
-        .setDescription(`Here Is Your Order \nMessage From Shop: \`\`\`${description}\`\`\` \n<:cart:${emojiData.cart}> Item: \`${order[0].item}\` \n<a:swipe:${emojiData.swipe}> Fullfilled By: \`${interaction.user.username}\` \n\n**If Your Are Satistifed By The Order Press The Heart Button**`)
+        .setTitle(`Your Order Is Here!!`)
+        .setDescription(`Here Is Your Order \nMessage From Shop: \`\`\`${description}\`\`\` \nItem: \`${order[0].item}\` \nFullfilled By: \`${interaction.user.username}\` \n\n**If Your Are Satistifed By The Order Press The Heart Button**`)
         .setColor("#00FF7F")
         .setThumbnail(avatar)
         .setImage(`${url}`)
@@ -112,7 +110,7 @@ async function slash(client, interaction, emojiData) {
         //@ts-ignore
         if (!invite.title)
             await interaction.editReply({
-                content: `<a:tick:${emojiData.tick}> \`Please Deliver This Order Manually In This Server\` \n${invite}`,
+                content: `\`Please Deliver This Order Manually In This Server\` \n${invite}`,
                 components: [],
                 embeds: [],
             });
@@ -128,14 +126,14 @@ async function buttons(client, interaction, emojiData) {
     if (interaction.customId == "deliver_confirm") {
         await automatic(client, interaction, interaction.message.embeds[0].footer.text.split("|")[0].trim(), interaction.message.embeds[0], emojiData);
         await interaction.update({
-            content: `<a:tick:${emojiData.tick}> ${interaction.message.embeds[0].footer.text} Delevered By ${interaction.user.username} \n\`User Earned 200 Points\``,
+            content: `${interaction.message.embeds[0].footer.text} Delevered By ${interaction.user.username} \n\`User Earned 200 Points\``,
             embeds: [],
             components: [],
         });
     }
     else if (interaction.customId == "deliver_cancel") {
         await interaction.update({
-            content: `<a:tick:${emojiData.tick}> Delivery Canceled`,
+            content: `Delivery Canceled`,
             embeds: [],
             components: [],
         });
@@ -167,7 +165,7 @@ async function buttons(client, interaction, emojiData) {
         //@ts-ignore
         if (!invite.title)
             await interaction.editReply({
-                content: `<a:tick:${emojiData.tick}> \`Please Deliver This Order Manually In This Server\` \n${invite}`,
+                content: `\`Please Deliver This Order Manually In This Server\` \n${invite}`,
                 components: [],
                 embeds: [],
             });
@@ -200,7 +198,7 @@ async function modal(client, interaction, emojiData) {
         if (!validURL(url)) {
             return await interaction.reply({
                 embeds: [
-                    embedSender(`<a:cross:${emojiData.cross}> Invalid URL Provided`, `Please Provide A Valid URL`, "ffcccb", "", ""),
+                    embedSender(`Invalid URL Provided`, `Please Provide A Valid URL`, "ffcccb", "", ""),
                 ],
             });
         }

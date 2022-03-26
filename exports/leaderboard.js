@@ -9,7 +9,7 @@ const userBoard = async (emojiData) => {
     if (data.length == 1) {
         let text = `${data[0].name} - ${data[0].points} - ${data[0].total}`;
         let embed = new discord_js_1.MessageEmbed()
-            .setTitle(`<a:tick:${emojiData.tick}> User Leaderboard`)
+            .setTitle(`User Leaderboard`)
             .setDescription(`\`\`\`${text}\`\`\``)
             .setColor("#0099ff");
         return embed;
@@ -26,7 +26,7 @@ const userBoard = async (emojiData) => {
         text = text + `${data[i].name} - ${data[i].points} - ${data[i].total}\n`;
     }
     let embed = new discord_js_1.MessageEmbed()
-        .setTitle(`<a:tick:${emojiData.tick}> User Leaderboard`)
+        .setTitle(`User Leaderboard`)
         .setDescription(`\`\`\`${text}\`\`\``)
         .setColor("#0099ff");
     return embed;
@@ -38,7 +38,7 @@ const serverBoard = async (emojiData) => {
     if (data.length == 1) {
         let text = `${data[0].name} - ${data[0].points}`;
         let embed = new discord_js_1.MessageEmbed()
-            .setTitle(`<a:tick:${emojiData.tick}> Server Leaderboard`)
+            .setTitle(`Server Leaderboard`)
             .setDescription(`\`\`\`${text}\`\`\``)
             .setColor("#0099ff");
         return embed;
@@ -55,7 +55,7 @@ const serverBoard = async (emojiData) => {
         text = text + `${data[i].name} - ${data[i].points}\n`;
     }
     let embed = new discord_js_1.MessageEmbed()
-        .setTitle(`<a:tick:${emojiData.tick}> Server Leaderboard`)
+        .setTitle(`Server Leaderboard`)
         .setDescription(`\`\`\`${text}\`\`\``)
         .setColor("#0099ff");
     return embed;

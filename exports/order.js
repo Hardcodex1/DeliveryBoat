@@ -16,33 +16,31 @@ const orderNow = async (client, name, item, description, interaction, target, ch
     const shopSchema = require("../schemas/shopSchema");
     let shopData = await shopSchema.find({ name: name });
     if (!shopData[0])
-        return await embedSender(`<a:cross:${emojiData.cross}> Shop Not Found`, "Error 404: `The Shop You Are Trying To Order From Does Not Exist.`", "ffcccb", "", "fail");
+        return await embedSender(`Shop Not Found`, "Error 404: `The Shop You Are Trying To Order From Does Not Exist.`", "ffcccb", "", "fail");
     let guild = await client.guilds.fetch(shopData[0]?.guildID);
     if (!guild)
-        return await embedSender(`<a:cross:${emojiData.cross}> Shop Server Not Found`, "Error 404: `The Server Which This Shop Belongs To Was Not Found.`", "ffcccb", "", "fail");
+        return await embedSender(`Shop Server Not Found`, "Error 404: `The Server Which This Shop Belongs To Was Not Found.`", "ffcccb", "", "fail");
     let Sendchannel = await guild.channels.fetch(shopData[0].channelID);
     if (!Sendchannel)
-        return await embedSender(`<a:cross:${emojiData.cross}> Shop Channel Not Found`, "Error 404: `The Server Which This Shop Belongs To Was Not Found.`", "ffcccb", "", "fail");
+        return await embedSender(`Shop Channel Not Found`, "Error 404: `The Server Which This Shop Belongs To Was Not Found.`", "ffcccb", "", "fail");
     let ID = v1().split("-")[0];
     let embed = new discord_js_1.MessageEmbed()
-        .setTitle(`<a:tick:${emojiData.tick}> New Order From ${interaction.guild.name} For ${item}`)
-        .setDescription(`<:age:${emojiData.age}> Order ID: \`${ID}\` \n<a:shop:${emojiData.shop}> Shop: \`${shopData[0]?.name}\` \n<:cart:${emojiData.cart}> Item: \`${item}\` \n<:order:${emojiData.order}> Description: \`${description}\` \n<a:swipe:${emojiData.swipe}> Deliver To: <@!${target}> \n<a:hobby:${emojiData.hobby}> Deliver In: <#${channel}> \n<a:hearts:${emojiData.hearts}> Points: \`400\``)
+        .setTitle(`New Order From ${interaction.guild.name} For ${item}`)
+        .setDescription(`Order ID: \`${ID}\` \nShop: \`${shopData[0]?.name}\` \nItem: \`${item}\` \nDescription: \`${description}\` \nDeliver To: <@!${target}> \nDeliver In: <#${channel}> \nPoints: \`400\``)
         .setColor("#39FF14")
         .setThumbnail(interaction.guild.iconURL())
         .setFooter({ text: `${ID}` });
     const row = new discord_js_1.MessageActionRow().addComponents(new discord_js_1.MessageButton()
         .setCustomId("order_deliver")
         .setLabel("Deliver")
-        .setEmoji(emojiData.tick)
         .setStyle("PRIMARY"), new discord_js_1.MessageButton()
         .setCustomId("deliver_manual")
         .setLabel("Manual")
-        .setEmoji(emojiData.swipe)
         .setStyle("PRIMARY"));
     Sendchannel.send({ embeds: [embed], components: [row] });
     embed = new discord_js_1.MessageEmbed()
-        .setTitle(`<a:tick:${emojiData.tick}> Order For ${item} Has Been Placed!!`)
-        .setDescription(`<:age:${emojiData.age}> Order ID: \`${ID}\` \n<a:shop:${emojiData.shop}> Shop: \`${shopData[0]?.name}\` \n<:cart:${emojiData.cart}> Item: \`${item}\` \n<:order:${emojiData.order}> Description: \`${description}\` \n<a:swipe:${emojiData.swipe}> Deliver To: <@!${target}> \n<a:hobby:${emojiData.hobby}> Deliver In: <#${channel}> \n\n<a:alert:${emojiData.alert}> **Please Wait Upto 24 Hours For The Order To Be Delivered**`)
+        .setTitle(`Order For ${item} Has Been Placed!!`)
+        .setDescription(`Order ID: \`${ID}\` \nShop: \`${shopData[0]?.name}\` \nItem: \`${item}\` \nDescription: \`${description}\` \nDeliver To: <@!${target}> \nDeliver In: <#${channel}> \n\n**Please Wait Upto 24 Hours For The Order To Be Delivered**`)
         .setThumbnail(interaction.user.displayAvatarURL())
         .setFooter({ text: `${interaction.user.id} | ${ID}` })
         .setColor("#FF5F1F");
@@ -91,20 +89,18 @@ async function slash(client, interaction, emojiData) {
         //     ephemeral: true,
         //   });
         let embed = new discord_js_1.MessageEmbed()
-            .setTitle(`<a:tick:${emojiData.tick}> | ${shop.name}`)
-            .setDescription(`<a:shop:${emojiData.shop}> Name: \`${shop.name}\` \n<:cart:${emojiData.cart}> Description: \`${shop.description
+            .setTitle(`Shop: | ${shop.name}`)
+            .setDescription(`Name: \`${shop.name}\` \nDescription: \`${shop.description
             ? shop.description
-            : "Welcome To My Shop. Please Order"}\` \n<a:upvote:${emojiData.upvote}> Points: \`${shop.points}\` \n<:order:${emojiData.order}> Completed Orders: \`${shop.orders}\``)
+            : "Welcome To My Shop. Please Order"}\` \nPoints: \`${shop.points}\` \nCompleted Orders: \`${shop.orders}\``)
             .setThumbnail(shop.image)
             .setColor("#8B008B");
         const row = new discord_js_1.MessageActionRow().addComponents(new discord_js_1.MessageButton()
             .setCustomId("order_next")
             .setLabel("Next")
-            .setEmoji(emojiData.swipe)
             .setStyle("PRIMARY"), new discord_js_1.MessageButton()
             .setCustomId("order_shop")
             .setLabel("Order")
-            .setEmoji(emojiData.tick)
             .setStyle("PRIMARY"));
         await interaction.reply({ embeds: [embed], components: [row] });
     }
@@ -190,7 +186,7 @@ async function buttons(client, interaction, emojiData) {
                 .trim(),
         });
         await interaction.update({
-            content: `<a:tick:${emojiData.tick}> Order Cancelled`,
+            content: `Order Cancelled`,
             embeds: [],
             components: [],
         });
@@ -255,20 +251,18 @@ async function buttons(client, interaction, emojiData) {
         //     ephemeral: true,
         //   });
         let embed = new discord_js_1.MessageEmbed()
-            .setTitle(`<a:tick:${emojiData.tick}> | ${shop.name}`)
-            .setDescription(`<a:shop:${emojiData.shop}> Name: \`${shop.name}\` \n<:cart:${emojiData.cart}> Description: \`${shop.description
+            .setTitle(`Shop: | ${shop.name}`)
+            .setDescription(`Name: \`${shop.name}\` \nDescription: \`${shop.description
             ? shop.description
-            : "Welcome To My Shop. Please Order"}\` \n<a:upvote:${emojiData.upvote}> Points: \`${shop.points}\` \n<:order:${emojiData.order}> Completed Orders: \`${shop.orders}\``)
+            : "Welcome To My Shop. Please Order"}\` \nPoints: \`${shop.points}\` \nCompleted Orders: \`${shop.orders}\``)
             .setThumbnail(shop.image)
             .setColor("#8B008B");
         const row = new discord_js_1.MessageActionRow().addComponents(new discord_js_1.MessageButton()
             .setCustomId("order_next")
             .setLabel("Next")
-            .setEmoji(emojiData.swipe)
             .setStyle("PRIMARY"), new discord_js_1.MessageButton()
             .setCustomId("order_shop")
             .setLabel("Order")
-            .setEmoji(emojiData.tick)
             .setStyle("PRIMARY"));
         await interaction.update({ embeds: [embed], components: [row] });
     }
@@ -319,7 +313,6 @@ async function modal(client, interaction, emojiData) {
         const row = new discord_js_1.MessageActionRow().addComponents(new discord_js_1.MessageButton()
             .setCustomId("order_cancel")
             .setLabel("Cancel")
-            .setEmoji(emojiData.cross)
             .setStyle("SECONDARY"));
         if (embed?.footer?.text != "fail")
             await interaction.reply({ embeds: [embed], components: [row] });
@@ -333,7 +326,6 @@ async function modal(client, interaction, emojiData) {
         const row = new discord_js_1.MessageActionRow().addComponents(new discord_js_1.MessageButton()
             .setCustomId("order_cancel")
             .setLabel("Cancel")
-            .setEmoji(emojiData.cross)
             .setStyle("SECONDARY"));
         if (embed?.footer?.text != "fail")
             await interaction.reply({ embeds: [embed], components: [row] });
