@@ -8,8 +8,8 @@ const execute_1 = __importDefault(require("./src/execute"));
 const mongo_1 = __importDefault(require("./src/mongo"));
 const discord_modals_1 = __importDefault(require("discord-modals"));
 (0, discord_modals_1.default)(bot_1.client);
-const register_1 = __importDefault(require("./register"));
-(0, register_1.default)();
+// import commands from "./register";
+// commands();
 process
     .on("unhandledRejection", (reason, p) => {
     console.error(reason, "Unhandled Rejection at Promise", p);
