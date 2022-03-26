@@ -4,7 +4,7 @@ exports.slash = void 0;
 const discord_js_1 = require("discord.js");
 async function slash(client, interaction, emojiData) {
     const embed = new discord_js_1.MessageEmbed()
-        .setTitle(`<a:shop:${emojiData.shop}> Commands!`)
+        .setTitle(`Commands!`)
         .setDescription(`\`\`\`This Bot Is Completely Slash Command Based!\`\`\``)
         .addFields({
         name: "/order official",
