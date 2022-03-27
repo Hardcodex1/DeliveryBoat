@@ -2,14 +2,16 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.slash = void 0;
 const discord_js_1 = require("discord.js");
-const userBoard = async (emojiData) => {
-    let data = await require("../schemas/profileSchema").find();
+const userBoard = async (interaction, emojiData) => {
+    let data = await require("../schemas/profileSchema").find({
+        guildID: interaction.guild.id,
+    });
     if (!data[0])
-        return;
+        return new discord_js_1.MessageEmbed().setTitle("No data");
     if (data.length == 1) {
         let text = `${data[0].name} - ${data[0].points} - ${data[0].total}`;
         let embed = new discord_js_1.MessageEmbed()
-            .setTitle(`User Leaderboard`)
+            .setTitle(`User Leaderboard For This Server`)
             .setDescription(`\`\`\`${text}\`\`\``)
             .setColor("#0099ff");
         return embed;
@@ -67,7 +69,7 @@ async function slash(client, interaction, emojiData) {
         await interaction.reply({ embeds: [embed] });
     }
     else if (command == "user") {
-        let embed = await userBoard(emojiData);
+        let embed = await userBoard(interaction, emojiData);
         await interaction.reply({ embeds: [embed] });
     }
 }
