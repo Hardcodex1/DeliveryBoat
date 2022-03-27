@@ -14,7 +14,7 @@ const userBoard = async (interaction, emojiData) => {
             .setTitle(`User Leaderboard For This Server`)
             .setDescription(`\`\`\`${text}\`\`\``)
             .setColor("#0099ff");
-        return embed;
+        return new discord_js_1.MessageEmbed().setTitle("No data for this server");
     }
     let text = "";
     for (let i = 0; i < data.length; i++) {
@@ -28,10 +28,10 @@ const userBoard = async (interaction, emojiData) => {
         text = text + `${data[i].name} - ${data[i].points} - ${data[i].total}\n`;
     }
     let embed = new discord_js_1.MessageEmbed()
-        .setTitle(`User Leaderboard`)
+        .setTitle(`User Leaderboard For This Server`)
         .setDescription(`\`\`\`${text}\`\`\``)
         .setColor("#0099ff");
-    return embed;
+    return new discord_js_1.MessageEmbed().setTitle("No data for this server");
 };
 const serverBoard = async (emojiData) => {
     let data = await require("../schemas/shopSchema").find();
